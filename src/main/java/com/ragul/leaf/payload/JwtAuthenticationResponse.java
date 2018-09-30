@@ -1,11 +1,16 @@
 package com.ragul.leaf.payload;
 
-/**
- * Created by rajeevkumarsingh on 19/08/17.
- */
+import java.util.Date;
+
 public class JwtAuthenticationResponse {
     private String accessToken;
     private String tokenType = "Bearer";
+    private Date expandTime;
+
+    public JwtAuthenticationResponse(String accessToken, Date expandTime) {
+        this.accessToken = accessToken;
+        this.expandTime = expandTime;
+    }
 
     public JwtAuthenticationResponse(String accessToken) {
         this.accessToken = accessToken;
@@ -25,5 +30,13 @@ public class JwtAuthenticationResponse {
 
     public void setTokenType(String tokenType) {
         this.tokenType = tokenType;
+    }
+
+    public Date getExpandTime() {
+        return expandTime;
+    }
+
+    public void setExpandTime(Date expandTime) {
+        this.expandTime = expandTime;
     }
 }

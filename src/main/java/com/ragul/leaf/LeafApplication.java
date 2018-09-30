@@ -58,7 +58,7 @@ public class LeafApplication implements CommandLineRunner {
 
             user1.setRoles(Collections.singleton(userRole));
 
-            User result = userRepository.save(user1);
+            userRepository.save(user1);
 
         }
     }

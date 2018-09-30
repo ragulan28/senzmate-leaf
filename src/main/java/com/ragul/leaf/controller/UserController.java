@@ -18,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -64,9 +63,9 @@ public class UserController {
     @PostMapping("/user/role")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> changeUserRole(@RequestParam(value = "username") String username, @RequestParam(value = "role") RoleName roleName) {
-        System.out.println(roleName);
+//        System.out.println(roleName);
         if (!userRepository.existsByUsername(username)) {
-            return new ResponseEntity(new ApiResponse(false, "Username is not found"),
+            return new ResponseEntity<>(new ApiResponse(false, "Username is not found"),
                     HttpStatus.BAD_REQUEST);
 
         }
@@ -74,15 +73,15 @@ public class UserController {
         User user = userRepository.findFirstByUsername(username);
 
         if (user.getRoles().contains(roleName)) {
-            return new ResponseEntity(new ApiResponse(false, "This user already have thia role"),
+            return new ResponseEntity<>(new ApiResponse(false, "This user already have thia role"),
                     HttpStatus.BAD_REQUEST);
         }
         if (roleName != RoleName.ROLE_GUEST && roleName != RoleName.ROLE_ADMIN && roleName != RoleName.ROLE_USER) {
-            return new ResponseEntity(new ApiResponse(false, "Role name is invalid"),
+            return new ResponseEntity<>(new ApiResponse(false, "Role name is invalid"),
                     HttpStatus.BAD_REQUEST);
         }
 
-        Set<Role> roles = user.getRoles();
+        Set<Role> roles = new HashSet<>();
         Role userRole = roleRepository.findByName(roleName)
                 .orElseThrow(() -> new AppException("User Role not set."));
         roles.add(userRole);
@@ -90,7 +89,7 @@ public class UserController {
 
 
         userRepository.save(user);
-        return new ResponseEntity(new ApiResponse(true, "This user privilege updated"),
+        return new ResponseEntity<>(new ApiResponse(true, "This user privilege updated"),
                 HttpStatus.OK);
 
     }

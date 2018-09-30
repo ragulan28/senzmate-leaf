@@ -22,7 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/file")
-@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+@PreAuthorize("hasRole('ADMIN')")
 public class FileController {
 
     private static final Logger logger = LoggerFactory.getLogger(FileController.class);

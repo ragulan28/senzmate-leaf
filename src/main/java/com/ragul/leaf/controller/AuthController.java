@@ -62,7 +62,8 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String jwt = tokenProvider.generateToken(authentication);
-        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
+//        System.out.println(tokenProvider.expiryDate);
+        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt,tokenProvider.expiryDate));
     }
 
     @PostMapping("/signup")
